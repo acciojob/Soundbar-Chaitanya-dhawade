@@ -1,25 +1,40 @@
-//your JS code here. If required.
-const sounds = ["applause", "boo", "gasp", "tada", "victory", "wrong"];
+const sounds = [
+    "applause",
+    "boo",
+    "gasp",
+    "tada",
+    "victory",
+    "wrong"
+];
 
 const buttons = document.getElementById("buttons");
 
-let currentAudio = null;
+function stopSongs() {
+
+    sounds.forEach(sound => {
+
+        const audio = document.getElementById(sound);
+
+        audio.pause();
+        audio.currentTime = 0;
+
+    });
+
+}
 
 sounds.forEach(sound => {
 
     const btn = document.createElement("button");
-    btn.className = "btn";
+
+    btn.classList.add("btn");
+
     btn.innerText = sound;
 
     btn.addEventListener("click", () => {
 
-        if(currentAudio){
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-        }
+        stopSongs();
 
-        currentAudio = new Audio(`sounds/${sound}.mp3`);
-        currentAudio.play();
+        document.getElementById(sound).play();
 
     });
 
@@ -28,16 +43,11 @@ sounds.forEach(sound => {
 });
 
 const stopBtn = document.createElement("button");
-stopBtn.className = "stop";
+
+stopBtn.classList.add("stop");
+
 stopBtn.innerText = "Stop";
 
-stopBtn.addEventListener("click", () => {
-
-    if(currentAudio){
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-    }
-
-});
+stopBtn.addEventListener("click", stopSongs);
 
 buttons.appendChild(stopBtn);
